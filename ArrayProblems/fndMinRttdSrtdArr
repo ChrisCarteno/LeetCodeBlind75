@@ -1,0 +1,37 @@
+class Solution(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        return min(nums);
+
+
+/**
+ * Above is the very easy python answer
+ * Below is the very now so easy javascript answer I came up with
+ * LeetCode problem 153. Find Minimum in Rotated Sorted Array
+ * @param {number[]} nums
+ * @return {number}
+
+ */
+var findMin = function(nums) {
+    let endIndex = nums.length - 1
+    
+    
+    
+    if(nums.length == 1) return nums[0]
+    
+    if(nums[0] < nums[nums.length -1]){
+        return nums[0];
+    }else if(nums[endIndex] < nums[endIndex -1]){
+                return nums[endIndex]
+    }else{
+        while(nums[endIndex] > nums[endIndex -1]){
+            endIndex --
+            if(nums[endIndex] < nums[endIndex -1]){
+                return nums[endIndex]
+            }
+        } 
+    }      
+};

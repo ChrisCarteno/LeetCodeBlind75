@@ -1,0 +1,43 @@
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ * LeetCode Problem 238. Product of Array Except Self
+ */
+var productExceptSelf = function(nums) {
+    let zeroCount = 0
+    let newArr = [];
+    let multiple = 1;
+    let index
+    let multipleCopy
+    for(let i = 0; i < nums.length; i++){
+        console.log(i + " plus and also "  + nums[i])
+        if(nums[i] == 0 ){
+            zeroCount ++
+            index = i
+            if(zeroCount > 1){
+            multiple = 0;
+            break;
+        }
+        }
+        else{
+            multiple*= nums[i];   
+        }
+
+    }
+        multipleCopy = multiple
+    if(zeroCount == 1){
+        multiple = 0;
+    }
+    for(let i = 0; i < nums.length; i++){
+        if(nums[i] ==  0){
+            newArr.push(multiple/1)
+        }else{
+        newArr.push(multiple/nums[i])
+            
+        }
+    }
+    if(zeroCount == 1){
+        newArr[index] = multipleCopy;
+    }
+    return newArr;
+};
