@@ -24,15 +24,10 @@
 # Example 3:
 # Input: nums = [0]
 # Output: 0
-
-class Solution(object):
-    def rob(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
         # Time Complexity: O(n)
         # Space Complexity: O(n)
+class Solution(object):
+    def rob(self, nums):
         if len(nums) == 1:
             return nums[0]
         
