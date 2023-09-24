@@ -30,4 +30,6 @@ class Solution(object):
     def isValid(self, s):
         for i in range(len(s)/2):
             s = s.replace('()','').replace('{}','').replace('[]','')
+            if s=='':
+                return True
         return s == ''
