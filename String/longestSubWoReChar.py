@@ -38,7 +38,7 @@ class Solution:
             s.pop(0)
             for j in s:
                 if(checkChar == j):
-                    break;
+                    break
                 else:
                     currentLen += 1
                     if(currentLen > longest):
