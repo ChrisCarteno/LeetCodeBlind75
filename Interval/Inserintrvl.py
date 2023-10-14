@@ -19,3 +19,20 @@
 #intervals is sorted by starti in ascending order.
 #newInterval.length == 2
 #0 <= start <= end <= 105
+
+class Solution(object):
+    def insert(self, intervals, newInterval):
+        """
+        :type intervals: List[List[int]]
+        :type newInterval: List[int]
+        :rtype: List[List[int]]
+        """
+        intervals.append(newInterval)
+        intervals.sort(key=lambda x: x[0])
+        res = [intervals[0]]
+        for i in range(1, len(intervals)):
+            if intervals[i][0] <= res[-1][1]:
+                res[-1][1] = max(res[-1][1], intervals[i][1])
+            else:
+                res.append(intervals[i])
+        return res
