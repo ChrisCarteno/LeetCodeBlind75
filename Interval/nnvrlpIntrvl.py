@@ -28,4 +28,15 @@ class Solution(object):
         :type intervals: List[List[int]]
         :rtype: int
         """
-        
+        intervals.sort()
+
+        res = 0
+        prev = 0
+        for start, end in intervals[1:]:
+            if start < intervals[prev][1]:
+                res += 1
+                if end < intervals[prev][1]:
+                    prev = intervals.index([start, end])
+            else:
+                prev = intervals.index([start, end])
+        return res
