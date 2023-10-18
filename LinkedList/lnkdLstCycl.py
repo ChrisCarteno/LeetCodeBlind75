@@ -35,4 +35,7 @@
 #         self.next = None
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
+        current = head
+        while(current)
+        
         
