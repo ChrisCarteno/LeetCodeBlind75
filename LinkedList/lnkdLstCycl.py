@@ -41,5 +41,5 @@ class Solution:
             fast = fast.next.next
             if current == fast :
                 return True
-        return false
+        return False
         
