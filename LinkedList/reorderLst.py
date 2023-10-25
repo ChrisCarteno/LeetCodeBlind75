@@ -28,4 +28,13 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
+        slow = head
+        fast = head.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        temp = slow.next
+        slow.next = None
+        currHead = temp
+        
         
