@@ -33,14 +33,26 @@ class Solution:
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
+
+        secondH = slow.next
         slow.next = None
-        currHead = slow.next
         prev = None
-        while currHead:
-            next = currHead.next
-            currHead.next = prev
-            prev = currHead
-            currHead = next
+        while secondH:
+            temp = secondH.next
+            secondH.next = prev
+            prev = secondH
+            secondH = temp
+
+        firstH = head
+        secondH = prev
+        while secondH:
+            temp1 = firstH.next
+            temp2 = secondH.next
+            firstH.next = secondH
+            secondH.next = temp1
+            firstH = temp1
+            secondH = temp2
+        
         
         
         
