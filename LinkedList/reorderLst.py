@@ -33,8 +33,14 @@ class Solution:
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-        temp = slow.next
         slow.next = None
-        currHead = temp
+        currHead = slow.next
+        prev = None
+        while currHead:
+            next = currHead.next
+            currHead.next = prev
+            prev = currHead
+            currHead = next
+        
         
         
