@@ -43,9 +43,21 @@ class Solution:
         islands = 0
         visited = set()
 
+        def dfs(grid, i, j, visited):
+            if i < 0 or i >= rows or j < 0 or j >= col or grid[i][j] == '0' or (i,j) in visited:
+                return
+            visited.add((i,j))
+            dfs(grid, i+1, j, visited)
+            dfs(grid, i-1, j, visited)
+            dfs(grid, i, j+1, visited)
+            dfs(grid, i, j-1, visited)
+
+
+
         for i in range(rows):
             for j in range(col):
                 if grid[i][j] == '1' and (i,j) not in visited:
-                    self.dfs(grid, i, j, visited)
+                    dfs(grid, i, j, visited)
                     islands += 1
         
+        return islands
