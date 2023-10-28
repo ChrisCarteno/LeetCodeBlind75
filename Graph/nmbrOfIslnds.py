@@ -35,4 +35,17 @@
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid:
+            return 0
+
+        rows = len(grid)
+        col = len(grid[0])
+        islands = 0
+        visited = set()
+
+        for i in range(rows):
+            for j in range(col):
+                if grid[i][j] == '1' and (i,j) not in visited:
+                    self.dfs(grid, i, j, visited)
+                    islands += 1
         
