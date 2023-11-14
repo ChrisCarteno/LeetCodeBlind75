@@ -39,3 +39,51 @@
 # n == heights[r].length
 # 1 <= m, n <= 200
 # 0 <= heights[r][c] <= 105
+
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        # get size of grid
+        m, n = len(heights), len(heights[0])
+        # create an array for each ocean
+        pacific = [[False] * n for _ in range(m)]
+        atlantic = [[False] * n for _ in range(m)]
+        
+        # create queue for each ocean
+        pacificQueue = collections.deque()
+        atlanticQueue = collections.deque()
+        
+        # add cells in first and last row to queue
+        for i in range(m):
+            pacificQueue.append((i, 0))
+            atlanticQueue.append((i, n-1))
+            pacific[i][0] = True
+            atlantic[i][n-1] = True
+            
+        # add cells in first and last column to queue
+        for i in range(n):
+            pacificQueue.append((0, i))
+            atlanticQueue.append((m-1, i))
+            pacific[0][i] = True
+            atlantic[m-1][i] = True
+        
+        # run bfs on each ocean
+        self.bfs(heights, pacific, pacificQueue)
+        self.bfs(heights, atlantic, atlanticQueue)
+        
+        # return list of cells that can flow to both oceans
+        result = []
+        for i in range(m):
+            for j in range(n):
+                if pacific[i][j] and atlantic[i][j]:
+                    result.append([i, j])
+        return result
+    
+    def bfs(self, heights, visited, queue):
+        m, n = len(heights), len(heights[0])
+        while queue:
+            x, y = queue.popleft()
+            for dx, dy in [(1,0), (-1,0), (0,1), (0,-1)]:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < m and 0 <= ny < n and not visited[nx][ny] and heights[nx][ny] >= heights[x][y]:
+                    visited[nx][ny] = True
+                    queue.append((nx, ny))
