@@ -26,30 +26,36 @@
 #     prerequisites[i].length == 2
 #     0 <= ai, bi < numCourses
 #     All the pairs prerequisites[i] are unique.
+
+## create adjacency list using hash map
+## each course will have a list of all of its prerequisites
+
+## Run DFS on each course, use set to check if we have visited a course
+        
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        # map each course to its prerequisites
-        courseDict = collections.defaultdict(list)
-        for relation in prerequisites:
-            nextCourse, prevCourse = relation[0], relation[1]
-            courseDict[nextCourse].append(prevCourse)
-
-        # visit each course
+        #map each course to its prerequisites
+        preMap = {i:[] for i in range(numCourses)}
+        for crs, pre in prerequisites:
+            preMap[crs].append(pre)
+        print(preMap)
+        #set to keep track of visited courses
         visited = set()
-        def dfs(course):
-            # return False if we are back to a course we've visited before
-            if course in visited:
+        def dfs(crs):
+            if crs in visited:
                 return False
-            # return True if we've reached a course with no prerequisites
-            if courseDict[course] == []:
+            if preMap[crs] == []:
                 return True
-
-            # mark this course as visited
-            visited.add(course)
-            # visit all the prerequisites of this course
-            for prevCourse in courseDict[course]:
-                # if any of the prerequisites can't be visited, return False
-                if not dfs(prevCourse):
+            visited.add(crs)
+            for pre in preMap[crs]:
+                if not dfs(pre):
                     return False
-            # all prerequisites can be visited, return True
+            visited.remove(crs)
+            preMap[crs] = []
             return True
+        
+        for crs in range(numCourses):
+            if not dfs(crs):
+                return False
+            
+        return True
