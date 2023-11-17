@@ -42,32 +42,23 @@
 
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        rows = len(heights)
-        cols = len(heights[0])
-        pac, atl = set(), set()
+        Rows, Cols = len(heights), len(heights[0])
+        pacific, atlantic = set(), set()
+
+        def dfs(r, c, visited, prevHeight):
+            if (r, c) in visited or r < 0 or c < 0 or r == Rows or c == Cols or heights[r][c] < prevHeight: return
+            visited.add((r, c))
+            dfs(r + 1, c, visited, heights[r][c])
+            dfs(r - 1, c, visited, heights[r][c])
+            dfs(r, c + 1, visited, heights[r][c])
+            dfs(r, c - 1, visited, heights[r][c])
+
+        for c in range(Cols):
+            dfs(0, c, pacific, heights[0][c])
+            dfs(Rows - 1, c, atlantic, heights[Rows - 1][c])
         
-        def dfs(r, c, visit, prev_height):
-            if((r,c) in visit or r < 0 or r == rows or c < 0 or c == cols or heights[r][c] < prev_height):
-                return
-            visit.add((r,c))
-            dfs(r + 1, c, visit, heights[r][c])
-            dfs(r - 1, c, visit, heights[r][c])
-            dfs(r, c + 1, visit, heights[r][c])
-            dfs(r, c - 1, visit, heights[r][c])
-            
-            
-        for c in range(cols):
-            dfs(0, c, pac, heights[0][c])
-            dfs(rows - 1 , c, atl, heights[rows - 1][c])
-            
-        for r in range(rows):
-            dfs(r, 0, pac, heights[r][0])
-            dfs(r, cols - 1, atl, heights[r][cols - 1])
-        
-        res = []
-        
-        for r in range(rows):
-            for c in range(cols):
-                if (r,c) in pac and (r,c) in atl:
-                    res.append([r,c])
-        return res
+        for r in range(Rows):
+            dfs(r, 0, pacific, heights[r][0])
+            dfs(r, Cols - 1, atlantic, heights[r][Cols - 1])
+
+        return list(pacific & atlantic)
