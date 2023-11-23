@@ -18,9 +18,34 @@
 # 1 <= m, n <= 200
 # -231 <= matrix[i][j] <= 231 - 1
 
+# Follow up:
+
+# A straightforward solution using O(mn) space is probably a bad idea.
+# A simple improvement uses O(m + n) space, but still not the best solution.
+# Could you devise a constant space solution?
+
 class Solution:
     def setZeroes(self, matrix: List[List[int]]) -> None:
         """
         Do not return anything, modify matrix in-place instead.
         """
-        
+        rows, cols = len(matrix), len(matrix[0])
+        rowZero = False
+        for r in range(rows):
+            for c in range(cols):
+                if matrix[r][c] == 0:
+                    matrix[0][c] = 0
+                    if r > 0:
+                        matrix[r][0] = 0
+                    else:
+                        rowZero = True
+        for r in range(1, rows):
+            for c in range(1, cols):
+                if matrix[0][c] == 0 or matrix[r][0] == 0:
+                    matrix[r][c] = 0
+        if rowZero:
+            for c in range(cols):
+                matrix[0][c] = 0
+        if matrix[0][0] == 0:
+            for r in range(rows):
+                matrix[r][0] = 0
