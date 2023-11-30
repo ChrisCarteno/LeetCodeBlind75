@@ -39,4 +39,33 @@
 #         self.next = next
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        
+        def mergeTwoLists(l1, l2):
+            dummy = ListNode()
+            cur = dummy
+            while l1 and l2:
+                if l1.val < l2.val:
+                    cur.next = l1
+                    cur = cur.next
+                    l1 = l1.next
+                else:
+                    cur.next = l2
+                    cur = cur.next
+                    l2 = l2.next
+            if l1:
+                cur.next = l1
+            if l2:
+                cur.next = l2
+            return dummy.next
+
+        if not lists:
+            return None
+
+        while len(lists) > 1:
+            new_lists = []
+            for i in range(0, len(lists), 2):
+                if i == len(lists) - 1:
+                    new_lists.append(lists[i])
+                else:
+                    new_lists.append(mergeTwoLists(lists[i], lists[i+1]))
+            lists = new_lists
+        return lists[0]
